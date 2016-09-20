@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"reflect"
 	"strconv"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/olekukonko/tablewriter"
 )
 
 type Team struct {
@@ -45,13 +45,31 @@ func main() {
 			fieldIndex = 0
 			teamIndex = teamIndex + 1
 		}
-		fmt.Println(teams[teamIndex])
+
+		// could have used directly a map but I was interested in learn how reflect works in golang
 		reflect.ValueOf(&teams[teamIndex]).Elem().Field(fieldIndex + 2).SetString(s.Text())
 
 		fieldIndex = fieldIndex + 1
 	})
 
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Pos", "Time", "P", "J", "V", "E", "D", "GP", "GC", "SG", "%"})
+
 	for _, team := range teams {
-		fmt.Println(team)
+		table.Append([]string{
+			team.Position,
+			team.Name,
+			team.Points,
+			team.Games,
+			team.Wins,
+			team.Draws,
+			team.Looses,
+			team.GoalsFor,
+			team.GoalsAgainst,
+			team.GoalDifference,
+			team.Percentage,
+		})
 	}
+
+	table.Render()
 }
