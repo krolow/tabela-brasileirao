@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/olekukonko/tablewriter"
@@ -25,7 +27,13 @@ type Team struct {
 }
 
 func main() {
-	doc, err := goquery.NewDocument("http://globoesporte.globo.com/futebol/brasileirao-serie-b/")
+	league := "a"
+
+	if len(os.Args) > 1 && os.Args[1] == "b" {
+		league = "b"
+	}
+
+	doc, err := goquery.NewDocument("http://globoesporte.globo.com/futebol/brasileirao-serie-" + league + "/")
 
 	if err != nil {
 		log.Fatal(err)
@@ -53,6 +61,7 @@ func main() {
 	})
 
 	table := tablewriter.NewWriter(os.Stdout)
+	fmt.Println("\u2605 BRASILERÃO SÉRIE " + strings.ToUpper(league) + " \u26BD")
 	table.SetHeader([]string{"Pos", "Time", "P", "J", "V", "E", "D", "GP", "GC", "SG", "%"})
 
 	for _, team := range teams {

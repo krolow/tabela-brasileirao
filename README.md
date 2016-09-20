@@ -5,7 +5,8 @@ It's a simple CLI that display the current [brasileirão table](http://globoespo
 ### Usage
 
 ```bash
-$ ./tabela-brasileirao
+$ ./tabela-brasileirao b
+★ BRASILERÃO SÉRIE B ⚽
 +-----+-------------------+----+----+----+----+----+----+----+-----+------+
 | POS |       TIME        | P  | J  | V  | E  | D  | GP | GC | SG  |  %   |
 +-----+-------------------+----+----+----+----+----+----+----+-----+------+
